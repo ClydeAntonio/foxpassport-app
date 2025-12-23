@@ -1,7 +1,14 @@
 import type { Metadata } from "next";
+import "cesium/Build/Cesium/Widgets/widgets.css";
 import "./globals.css";
-import Navbar from "@/src/components/Navbar"; 
-import Footer from "@/src/components/Footer";
+import Footer from "@/components/shared/Footer";
+import { Toaster } from 'sonner';
+
+// Import the Modal Component
+import AuthModal from "@/components/home/AuthModal"; 
+
+// Import the Master Provider
+import Providers from "@/providers"; 
 
 export const metadata: Metadata = {
   title: "FoxPassport - Let's Make Life an Event",
@@ -15,12 +22,18 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="antialiased text-gray-900 bg-white">
-        <Navbar />
-        <main className="min-h-screen">
-          {children}
-        </main>
-        <Footer />
+      <body className="antialiased text-gray-900 bg-white flex flex-col min-h-screen">
+        <Providers>
+          {/* 2. Add the Toaster here. 'richColors' gives you green for success/red for error automatically. */}
+          <Toaster position="top-center" richColors />
+
+          {/* 3. Your Auth Modal sits here */}
+          <AuthModal />
+          <main className="grow">
+            {children}
+          </main>
+          <Footer />
+        </Providers>
       </body>
     </html>
   );
